@@ -1,7 +1,7 @@
-'use strict';
+define([], function () {
+  'use strict';
 
-angular.module('angularJsApp')
-  .factory('User', function ($resource) {
+  var User = function ($resource) {
     return $resource('/api/users/:id', {
       id: '@id'
     }, { //parameters default
@@ -12,8 +12,13 @@ angular.module('angularJsApp')
       get: {
         method: 'GET',
         params: {
-          id:'me'
+          id: 'me'
         }
       }
-	  });
-  });
+    });
+  };
+
+  User.$inject = ['$resource'];
+
+  return User;
+});

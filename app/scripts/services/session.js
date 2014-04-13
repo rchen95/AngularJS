@@ -1,6 +1,12 @@
-'use strict';
+define([], function () {
 
-angular.module('angularJsApp')
-  .factory('Session', function ($resource) {
+  'use strict';
+
+  var Session = function ($resource) {
     return $resource('/api/session/');
-  });
+  };
+
+  Session.$inject = ['$resource'];
+
+  return Session;
+});

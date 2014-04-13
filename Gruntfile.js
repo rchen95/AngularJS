@@ -415,7 +415,51 @@ module.exports = function (grunt) {
       test: {
         NODE_ENV: 'test'
       }
+    },
+
+    // Settings for grunt-bower-requirejs
+    bower: {
+      app: {
+        rjsConfig: '<%= yeoman.app %>/scripts/main.js',
+        options: {
+          exclude: ['requirejs', 'json3', 'es5-shim']
+        }
+      }
+    },
+
+    replace: {
+      test: {
+        src: '<%= yeoman.app %>/../test/test-main.js',
+        overwrite: true,
+        replacements: [{
+          from: /paths: {[^}]+}/,
+          to: function() {
+            return require('fs').readFileSync(grunt.template.process('<%= yeoman.app %>') + '/scripts/main.js').toString().match(/paths: {[^}]+}/);
+          }
+        }]
+      }
+    },
+
+    // r.js compile config
+    requirejs: {
+      dist: {
+        options: {
+          dir: "<%= yeoman.dist %>/scripts/",
+          modules: [{
+            name: 'main'
+          }],
+          preserveLicenseComments: false, // remove all comments
+          removeCombined: true,
+          baseUrl: '<%= yeoman.app %>/scripts',
+          mainConfigFile: '<%= yeoman.app %>/scripts/main.js',
+          optimize: 'uglify2',
+          uglify2: {
+            mangle: false
+          }
+        }
+      }
     }
+
   });
 
   // Used for delaying livereload until after server has restarted
@@ -491,6 +535,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'bower-install',
+    'bower:app',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
@@ -499,7 +544,8 @@ module.exports = function (grunt) {
     'copy:dist',
     'cdnify',
     'cssmin',
-    'uglify',
+    // Below task commented out as r.js (via grunt-contrib-requirejs) will take care of this
+    //'uglify',
     'rev',
     'usemin'
   ]);
