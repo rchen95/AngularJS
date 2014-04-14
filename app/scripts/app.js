@@ -4,7 +4,7 @@ define(
     'angular',
     'services/session',
     'services/user',
-    'services/session',
+    'services/auth',
     'controllers/main',
     'controllers/login',
     'controllers/signup',

@@ -417,6 +417,26 @@ module.exports = function (grunt) {
       }
     },
 
+    // settings for protractor e2e tests
+    protractor: {
+      options: {
+        configFile: "node_modules/protractor/referenceConf.js", // Default config file
+        keepAlive: true, // If false, the grunt process stops when the test fails.
+        noColor: false, // If true, protractor will not use colors in its output.
+        //debug: true,
+        args: {
+          // Arguments passed to the command
+        }
+      },
+      e2e: {
+        options: {
+          configFile: "protractor-e2e.conf.js", // Target-specific config file
+          args: {} // Target-specific arguments
+        }
+      }
+    },
+
+
     // Settings for grunt-bower-requirejs
     bower: {
       app: {

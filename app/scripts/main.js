@@ -75,8 +75,6 @@ require.config({
   ]
 });
 
-//http://code.angularjs.org/1.2.1/docs/guide/bootstrap#overview_deferred-bootstrap
-window.name = 'NG_DEFER_BOOTSTRAP!';
 
 require([
   'angular',
@@ -91,7 +89,23 @@ require([
   var $html = angular.element(document.getElementsByTagName('html')[0]);
   /* jshint ignore:end */
   angular.element().ready(function() {
-    angular.resumeBootstrap();
+    // Because of RequireJS we need to bootstrap the app manually
+    // and Angular Scenario runner won't be able to communicate with our app
+    // unless we explicitly mark the container as app holder
+    // More info: https://groups.google.com/forum/#!msg/angular/yslVnZh9Yjk/MLi3VGXZLeMJ
+    // If you don't use angular e2e scenario runner then you don't need this workaround
+    var el = document.querySelector('body');
+    //Uncaught TypeError: Cannot read property 'name' of undefined
+    //angular.bootstrap(angular.element(el).addClass('ng-app'), [app['name']]);
+    angular.bootstrap(angular.element(el).addClass('ng-app'), ['angularJsApp']);
+
+    //http://stackoverflow.com/questions/15499997/how-to-use-angular-scenario-with-requirejs
+    el.dataset.ngApp = 'angularJsApp';
+    if (top !== window) {
+      window.parent.postMessage({
+        type: 'loadamd'
+      }, '*');
+    }
 
   });
 });

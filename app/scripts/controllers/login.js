@@ -24,9 +24,9 @@ define([], function () {
           });
       }
     };
-
-    LoginCtrl.$inject = ['$scope', 'Auth', '$location'];
-
-    return LoginCtrl;
   };
+
+  LoginCtrl.$inject = ['$scope', 'Auth', '$location'];
+
+  return LoginCtrl;
 });
