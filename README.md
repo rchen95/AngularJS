@@ -1,8 +1,8 @@
 This is a project to support AngularJS + RequireJS + Karma + Protractor + Express + MoogoDB.
 
 Steps to create:
-1.
-Created the prototype project by Angular-fullstack generator:
+
+Created the prototype project by Angular-fullstack generator, and  added requireJS support and protractor support to it
 
 $ yo
 
@@ -11,6 +11,6 @@ $ yo
 ❯ Run the Angular-fullstack generator (1.3.3)
 
 
-2. Added requireJS support
 
-3. Added protractor support
+
+
